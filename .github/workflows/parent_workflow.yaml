@@ -5,10 +5,8 @@ on:
 
 jobs:
   deploy-dev:
-    runs-on: ubuntu-latest
-    environment: dev
-    steps:
-      - uses: koustubh25/test/.github/workflows/deploy.yaml@main
-        with:
-          MY_VARIABLE: ${{ env.MY_VARIABLE }}
-          MY_SECRET: ${{ secrets.MY_SECRET }}
+    uses: koustubh25/test/.github/workflows/deploy.yaml@main
+    with:
+      MY_VARIABLE: ${{ env.MY_VARIABLE }}
+    secrets:
+      MY_SECRET: ${{ secrets.MY_SECRET }}

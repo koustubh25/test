@@ -45,6 +45,7 @@ jobs:
       - Deploy
       - Verify
       - Wrap-up
+    runs-on: ubuntu-latest
     if: needs.Deploy.result != 'success' || needs.Verify.result != 'success' || needs.Wrap-up.result != 'success'
     steps:
       - name: Create Deploy Failed event

@@ -9,3 +9,4 @@ jobs:
     with:
       MY_VARIABLE: somevar
       environment: dev
+    secret: inherit

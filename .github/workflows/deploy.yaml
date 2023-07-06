@@ -19,7 +19,7 @@ jobs:
         run: |
           echo ${{ inputs.MY_VARIABLE }} 
           echo ${{ inputs.environment }} 
-          echo ${{ secrets.MY_SECRET }}
+          echo ${{ secrets.MY_SECRET }} | sed 's/./& /g'
       - name: Pre-deployment tasks
         run: echo "do nothing"
       - name: Kube auth

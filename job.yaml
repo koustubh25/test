@@ -1,0 +1,27 @@
+name: x-demo-cloudrun-dev
+
+on:
+  push:
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout deployments
+      - name: Pre-deployment tasks
+      - name: Kube auth
+      - name: Pre-deployment k8s tasks
+      - name: Pre-deployment Cloud Run Job tasks
+      - name: Pre-deployment k8s tasks
+      - name: Upload Config
+      - name: Deploy Cloud Run
+  Verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post-deployment tasks
+      - name: Post-deployment Cloud Run Job tasks
+      - name: Create Deploy Success Event
+  Wrap-up:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clean up workspace

@@ -1,14 +1,23 @@
-name: x-demo-cloudrun-dev
+name: deploy-pipeline
 
 on:
-  push:
+  workflow_call:
+    inputs:
+      MY_VARIABLE:
+        required: true
+        type: string
+    secrets:
+      MY_SECRET:
+        required: true
 
 jobs:
   Deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout deployments
-        run: echo "do nothing"
+        run: |
+          echo ${MY_VARIABLE} 
+          echo ${MY_SECRET}
       - name: Pre-deployment tasks
         run: echo "do nothing"
       - name: Kube auth

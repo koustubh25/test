@@ -9,9 +9,6 @@ on:
       environment:
         required: true
         type: string
-    secrets:
-      MY_SECRET:
-        required: true
 
 jobs:
   Deploy:

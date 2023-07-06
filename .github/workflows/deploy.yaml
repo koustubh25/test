@@ -71,4 +71,5 @@ jobs:
     steps:
       - name: Clean up workspace
         run: echo "do nothing"
-      - name: exit 1
+      - name: test exit status after rollback
+        run: exit 1

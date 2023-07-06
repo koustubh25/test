@@ -5,7 +5,6 @@ on:
 
 jobs:
   deploy-dev:
-    environment: dev
     uses: koustubh25/test/.github/workflows/deploy.yaml@main
     with:
       MY_VARIABLE: ${{ env.MY_VARIABLE }}

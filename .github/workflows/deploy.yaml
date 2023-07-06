@@ -59,7 +59,7 @@ jobs:
       - Verify
       - Wrap-up-after-success
     runs-on: ubuntu-latest
-    if: needs.Deploy.result != 'success' || needs.Verify.result != 'success' || needs.Wrap-up-after-success.result != 'success'
+    if: ${{ failure() }}
     steps:
       - name: Create Deploy Failed event
         run: echo "do nothing"

@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev
     steps:
-      - uses: github.com/koustubh25/test/.github/workflows/deploy.yaml@main
+      - uses: koustubh25/test/.github/workflows/deploy.yaml@main
         with:
           MY_VARIABLE: ${{ env.MY_VARIABLE }}
           MY_SECRET: ${{ secrets.MY_SECRET }}

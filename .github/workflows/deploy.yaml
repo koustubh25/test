@@ -35,6 +35,7 @@ jobs:
       - name: Deploy Cloud Run
         run: echo "do nothing"
       - run: exit 1
+        name: exiting with error to test rollback
   Verify:
     runs-on: ubuntu-latest
     needs: [Deploy]

@@ -9,5 +9,6 @@ jobs:
     uses: koustubh25/test/.github/workflows/deploy.yaml@main
     with:
       MY_VARIABLE: ${{ env.MY_VARIABLE }}
+      environment: dev
     secrets:
       MY_SECRET: ${{ secrets.MY_SECRET }}

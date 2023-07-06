@@ -6,6 +6,9 @@ on:
       MY_VARIABLE:
         required: true
         type: string
+      environment:
+        required: true
+        type: string
     secrets:
       MY_SECRET:
         required: true

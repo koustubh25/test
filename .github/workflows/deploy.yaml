@@ -16,6 +16,7 @@ on:
 jobs:
   Deploy:
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
       - name: Checkout deployments
         run: |

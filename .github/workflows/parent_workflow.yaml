@@ -10,3 +10,10 @@ jobs:
       MY_VARIABLE: somevar
       environment: dev
     secrets: inherit
+  deploy-prod:
+    needs: [deploy-dev]
+    uses: koustubh25/test/.github/workflows/deploy.yaml@main
+    with:
+      MY_VARIABLE: somevar
+      environment: prod
+    secrets: inherit

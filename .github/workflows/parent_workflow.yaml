@@ -17,8 +17,8 @@ jobs:
 
   build-all:
     needs: [list-apps]
-    max-par
     strategy:
+      max-parallel: 1
       matrix:
         environments: ["dev", "np"]
     uses: koustubh25/test/.github/workflows/deploy.yaml@main

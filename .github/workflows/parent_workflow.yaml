@@ -13,10 +13,11 @@ jobs:
       - run: echo "app=${{ matrix.apps }}" >> "GITHUB_OUTPUT"
         id: appname
     outputs:
-      app: ${{ steps.appname.app }}
+      app: ${{ steps.appname.outputs.app }}
 
   build-all:
     needs: [list-apps]
+    max-par
     strategy:
       matrix:
         environments: ["dev", "np"]

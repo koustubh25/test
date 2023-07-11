@@ -8,8 +8,11 @@ jobs:
     strategy:
       matrix:
         apps: ["config/x-demo-cloudrun", "config/x-demo-cloudrun-bg"]
+    steps:
+      - run: echo "app=${{ matrix.app }}"" >> "GITHUB_OUTPUT"
+        id: appname
     outputs:
-      app: ${{ matrix.apps }}
+      app: ${{ steps.appname.app }}
 
   build-all:
     needs: [build-all]

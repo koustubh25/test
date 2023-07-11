@@ -23,4 +23,4 @@ jobs:
     uses: koustubh25/test/.github/workflows/deploy.yaml@main
     with:
       environment: ${{ matrix.environments }}
-      MY_VARIABLE: ${{ needs.list-apps.app }}
+      MY_VARIABLE: ${{ needs.list-apps.outputs.app }}

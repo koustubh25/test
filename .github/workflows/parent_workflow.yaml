@@ -16,13 +16,9 @@ jobs:
       app: ${{ steps.appname.app }}
 
   build-all:
-    needs: [build-all]
-    runs-on: ubuntu-latest
+    needs: [list-apps]
     strategy:
-      max-parallel: 1
       matrix:
-        # ideally, this should be retrieved from the command `x workspace list env --vs x`
-        # TBD: not required, this can be determined in a previous job, from the list of envs in xCRDs
         environments: ["dev", "np"]
     uses: koustubh25/test/.github/workflows/deploy.yaml@main
     with:

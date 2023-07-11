@@ -5,6 +5,7 @@ on:
 
 jobs:
   list-apps:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         apps: ["config/x-demo-cloudrun", "config/x-demo-cloudrun-bg"]
@@ -16,6 +17,7 @@ jobs:
 
   build-all:
     needs: [build-all]
+    runs-on: ubuntu-latest
     strategy:
       max-parallel: 1
       matrix:

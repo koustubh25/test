@@ -10,7 +10,7 @@ jobs:
       matrix:
         apps: ["config/x-demo-cloudrun", "config/x-demo-cloudrun-bg"]
     steps:
-      - run: echo "app=${{ matrix.apps }}"" >> "GITHUB_OUTPUT"
+      - run: echo "app=${{ matrix.apps }}" >> "GITHUB_OUTPUT"
         id: appname
     outputs:
       app: ${{ steps.appname.app }}

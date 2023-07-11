@@ -1,19 +1,47 @@
-name: x-demo-cloudrun-pipeline
+# name: x-demo-cloudrun-pipeline
+
+# on:
+#   push:
+
+# jobs:
+#   deploy-dev:
+#     uses: koustubh25/test/.github/workflows/deploy.yaml@main
+#     with:
+#       MY_VARIABLE: somevar
+#       environment: dev
+#     secrets: inherit
+#   deploy-prod:
+#     needs: [deploy-dev]
+#     uses: koustubh25/test/.github/workflows/deploy.yaml@main
+#     with:
+#       MY_VARIABLE: somevar
+#       environment: prod
+#     secrets: inherit
+
+name: Build all
 
 on:
   push:
+    # branch:
+    #   - main
 
 jobs:
-  deploy-dev:
+  list-apps:
+    strategy:
+      matrix:
+        apps: ["config/x-demo-cloudrun", "config/x-demo-cloudrun-bg"]
+    outputs:
+      app: ${{ matrix.apps }}
+
+  build-all:
+    needs: [build-all]
+    strategy:
+      max-parallel: 1
+      matrix:
+        # ideally, this should be retrieved from the command `x workspace list env --vs x`
+        # TBD: not required, this can be determined in a previous job, from the list of envs in xCRDs
+        environments: ["dev", "np"]
     uses: koustubh25/test/.github/workflows/deploy.yaml@main
     with:
-      MY_VARIABLE: somevar
-      environment: dev
-    secrets: inherit
-  deploy-prod:
-    needs: [deploy-dev]
-    uses: koustubh25/test/.github/workflows/deploy.yaml@main
-    with:
-      MY_VARIABLE: somevar
-      environment: prod
-    secrets: inherit
+      environment: ${{ matrix.environments }}
+      MY_VARIABLE: ${{ needs.list-apps.app }}

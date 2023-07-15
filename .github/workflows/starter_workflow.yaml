@@ -14,5 +14,5 @@ jobs:
         envs: [["dev"], ["sit1", "sit2", "sit3"], ["prod"]]
     uses: ./.github/workflows/workflow-app.yaml
     with:
-      app: ${{ toJSON(["config/x-demo-cloudrun", "config/x-demo-cloudrun-bg"]) }}
+      app: '["config/x-demo-cloudrun", "config/x-demo-cloudrun-bg"]'
       envs: ${{ toJSON(matrix.envs) }}

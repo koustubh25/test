@@ -16,5 +16,6 @@ jobs:
     strategy:
       matrix:
         envs: ${{ fromJSON(inputs.envs) }}
-    run: |
-      echo ${{ matrix.envs }}
+    steps:
+      run: |
+        echo ${{ matrix.envs }}

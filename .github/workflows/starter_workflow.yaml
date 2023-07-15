@@ -13,19 +13,7 @@ jobs:
       matrix:
         apps: ["config/x-demo-cloudrun", "config/x-demo-cloudrun-bg"]
         envs: [["dev"], ["sit1", "sit2", "sit3"], ["prod"]]
-    # uses: koustubh25/test/.github/workflows/workflow-app.yaml@main
-    # with:
-    #   app: ${{ matrix.apps }}
-    steps:
-      - run: |
-          echo ${{ matrix.apps }}
-          echo ${{ matrix.envs }}
-
-  # print-app:
-  #   runs-on: ubuntu-latest
-  #   needs: [build-apps]
-  #   steps:
-  #     - run: |
-  #         echo ${{ needs.build-apps.outputs.app }}
-  #         sleep 30
-  #         echo "sleep done"
+    uses: ./.github/workflows/workflow-app.yaml
+    with:
+      app: ${{ matrix.apps }}
+      envs: ${{ matrix.envs }}

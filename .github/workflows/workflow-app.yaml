@@ -17,5 +17,5 @@ jobs:
       matrix:
         envs: ${{ fromJSON(inputs.envs) }}
     steps:
-      run: |
-        echo ${{ matrix.envs }}
+      - run: |
+          echo ${{ matrix.envs }}

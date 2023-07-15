@@ -14,8 +14,10 @@ jobs:
   deploy-app-env:
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 1
       matrix:
         envs: ${{ fromJSON(inputs.envs) }}
     steps:
       - run: |
           echo ${{ matrix.envs }}
+          sleep 60

@@ -17,6 +17,9 @@ jobs:
     # with:
     #   app: ${{ matrix.apps }}
     steps:
+      - run: |
+          sleep 30
+          echo "done sleeping in first step"
       - run: echo "app=${{ matrix.apps }}" >> "GITHUB_OUTPUT"
         id: appname
     outputs:

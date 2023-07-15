@@ -3,7 +3,7 @@ name: workflow-app
 on:
   workflow_call:
     inputs:
-      app:
+      apps:
         required: true
         type: string
       envs:
@@ -15,8 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        envs: ${{ fromJSON(inputs.envs) }}
+        env: ${{ fromJSON(inputs.envs) }}
+        app: ${{ fromJSON(inputs.apps) }}
     steps:
       - run: |
-          echo ${{ matrix.envs }}
-          sleep 60
+          echo ${{ matrix.env }}
+          echo ${{ inputs.app }}
+          sleep 10

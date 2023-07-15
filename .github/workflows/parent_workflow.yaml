@@ -1,27 +1,31 @@
-name: Build all
+# name: Build all
 
-on:
-  push:
+# on:
+#   push:
+#     branch:
+#       - main
 
-jobs:
-  list-apps:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        apps: ["config/x-demo-cloudrun", "config/x-demo-cloudrun-bg"]
-    steps:
-      - run: echo "app=${{ matrix.apps }}" >> "GITHUB_OUTPUT"
-        id: appname
-    outputs:
-      app: ${{ steps.appname.outputs.app }}
+# jobs:
+#   list-apps:
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         # TBD: could be optional, resolved automatically from git diff?
+#         apps: ["config/x-demo-cloudrun", "config/x-demo-cloudrun-bg"]
+#     steps:
+#       - run: echo "app=${{ matrix.apps }}" >> "GITHUB_OUTPUT"
+#         id: appname
+#     outputs:
+#       app: ${{ steps.appname.outputs.app }}
 
-  build-all:
-    needs: [list-apps]
-    strategy:
-      max-parallel: 1
-      matrix:
-        environments: ["dev", "np"]
-    uses: koustubh25/test/.github/workflows/deploy.yaml@main
-    with:
-      environment: ${{ matrix.environments }}
-      MY_VARIABLE: ${{ needs.list-apps.outputs.app }}
+#   build-all:
+#     needs: [list-apps]
+#     strategy:
+#       max-parallel: 1
+#       matrix:
+#         # TBD: could be optional, resolved automatically from xCRDs
+#         environments: ["dev", "np"]
+#     uses: anzx/x-demo-cloudrun/.github/workflows/workflow.env.yaml@test-workflow-xeps
+#     with:
+#       env: ${{ matrix.environments }}
+#       app: ${{ needs.list-apps.outputs.app }}

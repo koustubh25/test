@@ -1,0 +1,32 @@
+# app : ["app1", "app2"] in parallel
+# stages/envs: [["dev"], ["sit1, sit2"]]
+
+name: Build-all
+
+on:
+  push:
+
+jobs:
+  build-apps:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 2
+      matrix:
+        apps: ["config/x-demo-cloudrun", "config/x-demo-cloudrun-bg"]
+    # uses: koustubh25/test/.github/workflows/workflow-app.yaml@main
+    # with:
+    #   app: ${{ matrix.apps }}
+    steps:
+      - run: echo "app=${{ matrix.apps }}" >> "GITHUB_OUTPUT"
+        id: appname
+    outputs:
+      app: ${{ steps.appname.outputs.app }}
+
+  print-app:
+    runs-on: ubuntu-latest
+    needs: [build-apps]
+    steps:
+      - run: |
+          echo ${{ needs.build-apps.outputs.app }}
+          sleep 30
+          echo "sleep done"

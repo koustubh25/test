@@ -1,0 +1,8 @@
+# name: workflow-app
+
+# on:
+#   workflow_call:
+#     inputs:
+#       app:
+#         required: true
+#         type: string

@@ -1,79 +1,79 @@
-name: deploy-pipeline
+# name: deploy-pipeline
 
-on:
-  workflow_call:
-    inputs:
-      MY_VARIABLE:
-        required: true
-        type: string
-      environment:
-        required: true
-        type: string
+# on:
+#   workflow_call:
+#     inputs:
+#       MY_VARIABLE:
+#         required: true
+#         type: string
+#       environment:
+#         required: true
+#         type: string
 
-jobs:
-  Deploy:
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
-    steps:
-      - name: Checkout deployments
-        run: |
-          echo ${{ inputs.MY_VARIABLE }} 
-          echo ${{ inputs.environment }} 
-          echo ${{ secrets.MY_SECRET }} | sed 's/./& /g'
-      - name: Pre-deployment tasks
-        run: echo "do nothing"
-      - name: Kube auth
-        run: echo "do nothing"
-      - name: Pre-deployment k8s tasks
-        run: echo "do nothing"
-      - name: Pre-deployment Cloud Run Job tasks
-        run: echo "do nothing"
-      - name: Pre-deployment k8s tasks
-        run: echo "do nothing"
-      - name: Upload Config
-        run: echo "do nothing"
-      - name: Deploy Cloud Run
-        run: echo "do nothing"
-      # - run: exit 1
-      #   name: exiting with error to test rollback
-  Verify:
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
-    needs: [Deploy]
-    steps:
-      - name: Post-deployment tasks
-        run: echo "do nothing"
-      - name: Post-deployment Cloud Run Job tasks
-        run: echo "do nothing"
-      - name: Create Deploy Success Event
-        run: echo "do nothing"
-        id: Deploysuccessevent
-  Wrap-up-after-success:
-    needs: [Verify]
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
-    steps:
-      - name: Clean up workspace
-        run: echo "do nothing"
-  RollBack:
-    needs:
-      - Deploy
-      - Verify
-      - Wrap-up-after-success
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
-    if: ${{ failure() }}
-    steps:
-      - name: Create Deploy Failed event
-        run: echo "do nothing"
-      - name: rollback
-        run: echo "do nothing"
-  Wrap-up-after-rollback:
-    needs: [RollBack]
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
-    steps:
-      - name: Clean up workspace
-        run: echo "do nothing"
-      - name: test exit status after rollback
-        run: exit 1
+# jobs:
+#   Deploy:
+#     runs-on: ubuntu-latest
+#     environment: ${{ inputs.environment }}
+#     steps:
+#       - name: Checkout deployments
+#         run: |
+#           echo ${{ inputs.MY_VARIABLE }}
+#           echo ${{ inputs.environment }}
+#           echo ${{ secrets.MY_SECRET }} | sed 's/./& /g'
+#       - name: Pre-deployment tasks
+#         run: echo "do nothing"
+#       - name: Kube auth
+#         run: echo "do nothing"
+#       - name: Pre-deployment k8s tasks
+#         run: echo "do nothing"
+#       - name: Pre-deployment Cloud Run Job tasks
+#         run: echo "do nothing"
+#       - name: Pre-deployment k8s tasks
+#         run: echo "do nothing"
+#       - name: Upload Config
+#         run: echo "do nothing"
+#       - name: Deploy Cloud Run
+#         run: echo "do nothing"
+#       # - run: exit 1
+#       #   name: exiting with error to test rollback
+#   Verify:
+#     runs-on: ubuntu-latest
+#     environment: ${{ inputs.environment }}
+#     needs: [Deploy]
+#     steps:
+#       - name: Post-deployment tasks
+#         run: echo "do nothing"
+#       - name: Post-deployment Cloud Run Job tasks
+#         run: echo "do nothing"
+#       - name: Create Deploy Success Event
+#         run: echo "do nothing"
+#         id: Deploysuccessevent
+#   Wrap-up-after-success:
+#     needs: [Verify]
+#     runs-on: ubuntu-latest
+#     environment: ${{ inputs.environment }}
+#     steps:
+#       - name: Clean up workspace
+#         run: echo "do nothing"
+#   RollBack:
+#     needs:
+#       - Deploy
+#       - Verify
+#       - Wrap-up-after-success
+#     runs-on: ubuntu-latest
+#     environment: ${{ inputs.environment }}
+#     if: ${{ failure() }}
+#     steps:
+#       - name: Create Deploy Failed event
+#         run: echo "do nothing"
+#       - name: rollback
+#         run: echo "do nothing"
+#   Wrap-up-after-rollback:
+#     needs: [RollBack]
+#     runs-on: ubuntu-latest
+#     environment: ${{ inputs.environment }}
+#     steps:
+#       - name: Clean up workspace
+#         run: echo "do nothing"
+#       - name: test exit status after rollback
+#         run: exit 1

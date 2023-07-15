@@ -15,4 +15,4 @@ jobs:
     uses: ./.github/workflows/workflow-app.yaml
     with:
       app: ${{ matrix.apps }}
-      envs: ${{ matrix.envs }}
+      envs: toJSON(${{ matrix.envs }})

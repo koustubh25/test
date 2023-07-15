@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        envs: ${{ fromJSON(inputs.envs) }}
+        envs: fromJSON(${{ inputs.envs }})
     steps:
       - run: |
           echo ${{ matrix.envs }}

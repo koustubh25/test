@@ -13,13 +13,20 @@ on:
 jobs:
   deploy-app-env:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ github.event.repository.name }}
     strategy:
       matrix:
         env: ${{ fromJSON(inputs.envs) }}
         app: ${{ fromJSON(inputs.apps) }}
     environment: ${{ matrix.env }}
     steps:
+      - id: checkout
+        uses: actions/checkout@v3
+        with:
+          path: ${{ github.event.repository.name }}
       - run: |
           echo ${{ matrix.env }}
-          echo ${{ inputs.app }}
+          echo ${{ matrix.app }}
           sleep 10

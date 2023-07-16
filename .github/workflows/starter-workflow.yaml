@@ -15,12 +15,8 @@ jobs:
         with:
           path: ${{ github.event.repository.name }}
       - run: |
-          echo "checking if already checked out"
           pwd
-          ls
-          ls /home/runner/work/test/test
-          ls /home/runner/work/test
-          ls /home/runner/work
+          cd ${{ github.event.repository.name }}
 
   build-apps:
     needs: [discover-apps]

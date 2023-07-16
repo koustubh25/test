@@ -9,15 +9,20 @@ on:
 jobs:
   discover-apps:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ github.event.repository.name }}
     steps:
       - id: checkout
         uses: actions/checkout@v3
         with:
           path: ${{ github.event.repository.name }}
+      - name: yq - portable yaml processor
+        uses: mikefarah/yq@v4.34.2
       - run: |
           pwd
           cd ${{ github.event.repository.name }}
-          ls
+          # discover app
 
   build-apps:
     needs: [discover-apps]

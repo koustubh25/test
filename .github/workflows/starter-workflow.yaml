@@ -21,7 +21,7 @@ jobs:
         uses: mikefarah/yq@v4.34.2
       - run: |
           pwd
-          cd ${{ github.event.repository.name }}
+          ls
           # discover app
 
   build-apps:

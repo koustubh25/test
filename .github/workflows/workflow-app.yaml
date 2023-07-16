@@ -16,7 +16,6 @@ jobs:
       matrix:
         env: ${{ fromJSON(inputs.envs) }}
         app: ${{ fromJSON(inputs.apps) }}
-    environment: ${{ matrix.env }}
     uses: ./.github/workflows/workflow-stage.yaml
     with:
       app: ${{ matrix.app }}

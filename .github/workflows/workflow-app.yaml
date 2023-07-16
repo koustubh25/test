@@ -9,6 +9,9 @@ on:
       envs:
         required: true
         type: string
+      stage:
+        required: true
+        type: string
 
 jobs:
   deploy-app-env:
@@ -26,7 +29,10 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: ${{ github.event.repository.name }}
-      - run: |
-          echo ${{ matrix.env }}
-          echo ${{ matrix.app }}
+      - name: Merge into x-deployments
+        run: |
+          echo "docker run x-github-actions:rapid generate.manifests.env"
+          # internally uses x manifest gen --base=${{ matrix.app }} --filter env=${{ matrix.env }}'
+          # This creates PR and merges into x-deployments
+          echo ${{ inputs.stage }}
           sleep 10

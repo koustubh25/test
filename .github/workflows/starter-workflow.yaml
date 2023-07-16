@@ -29,7 +29,7 @@ jobs:
         name: Get Environments
         run: |
           # This command doesn't exist, but something like this is needed which provides enviornments in order
-          echo "Running 'x workspace environments list --order"
+          echo "Running 'x workspace environments list --order" (--vs x)
           echo "envs=[[\"dev\"],[\"sit1\",\"sit2\",\"sit3\"],[\"prod\"]]" >> "$GITHUB_OUTPUT"
 
   build-apps:
@@ -37,8 +37,10 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        envs: ${{ fromJSON(needs.discover-apps.outputs.envs) }}
+        envs: ${{ fromJSON(needs.discover-apps.outputs.envs) }} # 1 set of environments
+        stages: ["predeploy", "deploy", "postdeploy"]
     uses: ./.github/workflows/workflow-app.yaml
     with:
       apps: ${{ needs.discover-apps.outputs.apps }}
       envs: ${{ toJSON(matrix.envs) }}
+      stage: ${{ matrix.stages }}

@@ -38,9 +38,7 @@ jobs:
       max-parallel: 1
       matrix:
         envs: ${{ fromJSON(needs.discover-apps.outputs.envs) }} # 1 set of environments
-        stages: ["predeploy", "deploy", "postdeploy"]
     uses: ./.github/workflows/workflow-app.yaml
     with:
       apps: ${{ needs.discover-apps.outputs.apps }}
       envs: ${{ toJSON(matrix.envs) }}
-      stage: ${{ matrix.stages }}

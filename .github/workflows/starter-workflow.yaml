@@ -9,10 +9,10 @@ on:
 jobs:
   discover-apps:
     steps:
-      run: |
-        echo "checking if already checked out"
-        pwd
-        ls
+      - run: |
+          echo "checking if already checked out"
+          pwd
+          ls
 
   build-apps:
     strategy:

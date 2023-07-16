@@ -19,7 +19,7 @@ jobs:
       matrix:
         stages: ["predeploy", "deploy", "postdeploy"]
     steps:
-      - run: echo "stage=${{ [matrix.stages] }}" >> "GITHUB_OUTPUT"
+      - run: echo "stage=[${{ matrix.stages }}]" >> "GITHUB_OUTPUT"
         id: getstage
 
   deploy-app-env:

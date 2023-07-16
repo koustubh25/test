@@ -19,11 +19,9 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: ${{ github.event.repository.name }}
-      - name: yq - portable yaml processor
-        uses: mikefarah/yq@v4.34.2
       - id: getapps
         run: |
-          apps=($(grep -l "apps.x.anz.com" **/*.yaml | xargs -I{} dirname {}))
+          apps=($(grep -rl --exclude-dir="\.github"  "apps.x.anz.com" . | xargs -I{} dirname {}))
           echo "apps=$(jq -c -n '$ARGS.positional' --args ${apps[@]})" >> "$GITHUB_OUTPUT"
 
   build-apps:

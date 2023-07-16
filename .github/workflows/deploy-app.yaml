@@ -1,4 +1,4 @@
-name: workflow-app
+name: Deploy to Environments
 
 on:
   workflow_call:
@@ -16,7 +16,7 @@ jobs:
       matrix:
         env: ${{ fromJSON(inputs.envs) }}
         app: ${{ fromJSON(inputs.apps) }}
-    uses: ./.github/workflows/workflow-stage.yaml
+    uses: ./.github/workflows/deploy-stage.yaml
     with:
       app: ${{ matrix.app }}
       env: ${{ matrix.env }}

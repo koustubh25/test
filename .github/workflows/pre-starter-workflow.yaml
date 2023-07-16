@@ -1,8 +1,0 @@
-name: Build-and-deploy
-
-on:
-  push:
-
-jobs:
-  bootstrap:
-    uses: ./.github/workflows/starter-workflow.yaml

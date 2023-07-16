@@ -1,0 +1,53 @@
+name: Deploy a stage (predeploy, deploy, postdeploy)
+
+on:
+  workflow_call:
+    inputs:
+      app:
+        required: true
+        type: string
+      env:
+        required: true
+        type: string
+
+jobs:
+  deploy-stage:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        stages: ["predeploy", "deploy", "postdeploy"]
+    environment: ${{ inputs.env }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@v3
+        with:
+          path: ${{ github.event.repository.name }}
+      - name: Merge into x-deployments
+        run: |
+          echo "docker run x-github-actions:rapid generate.manifests.env"
+          # internally uses x manifest gen --base=${{ inputs.app }} --filter env=${{ matrix.env }} --filter stage=${{ matrix.stages }}'
+          # This creates PR and merges into x-deployments
+          echo ${{ inputs.app }}
+          echo ${{ matrix.env }}
+          sleep 10
+      # - name: Deploy ${{ inputs.app }} ${{ inputs.env }} ${{ matrix.stages }}
+      #   working-directory: ./${{ inputs.env }}/${{ matrix.stages }}/cloudrunjob
+      #   run: |
+      #     deploy.sh --kind=cloudrunjob --name=xxx
+      # - name: Deploy ${{ inputs.app }} ${{ inputs.env }} ${{ matrix.stages }}
+      #   working-directory: ./${{ inputs.env }}/${{ matrix.stages }}/cloudrun
+      #   run: |
+      #     deploy.sh --kind=cloudrun --name=xxx
+      # - name: Deploy ${{ inputs.app }} ${{ inputs.env }} ${{ matrix.stages }}
+      #   working-directory: ./${{ inputs.env }}/${{ matrix.stages }}/cloudfunction
+      #   run: |
+      #     deploy.sh --kind=cloudfunction --name=xxx
+      # - name: Deploy ${{ inputs.app }} ${{ inputs.env }} ${{ matrix.stages }}
+      #   working-directory: ./${{ inputs.env }}/${{ matrix.stages }}/kubernetes
+      #   run: |
+      #     TODO: wait for  fluxtomization to be healthy
+      # - name: Deploy ${{ inputs.app }} ${{ inputs.env }} ${{ matrix.stages }}
+      #   working-directory: ./${{ inputs.env }}/${{ matrix.stages }}/kubernetesjob
+      #   run: |
+      #     TODO: wait for  fluxtomization to be healthy

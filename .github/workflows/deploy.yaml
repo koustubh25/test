@@ -1,0 +1,8 @@
+name: Deploy
+
+on:
+  push:
+
+jobs:
+  bootstrap:
+    uses: ./.github/workflows/orchestrate.yaml

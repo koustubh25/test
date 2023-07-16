@@ -1,4 +1,4 @@
-name: Build-all
+name: Orchestrate apps and environments
 
 on:
   workflow_call:
@@ -38,7 +38,7 @@ jobs:
       max-parallel: 1
       matrix:
         envs: ${{ fromJSON(needs.discover-apps.outputs.envs) }} # 1 set of environments
-    uses: ./.github/workflows/workflow-app.yaml
+    uses: ./.github/workflows/deploy-app.yaml
     with:
       apps: ${{ needs.discover-apps.outputs.apps }}
       envs: ${{ toJSON(matrix.envs) }}

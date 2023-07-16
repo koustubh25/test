@@ -9,6 +9,8 @@ on:
 jobs:
   discover-apps:
     runs-on: ubuntu-latest
+    outputs:
+      apps: ${{ steps.getapps.outputs.apps}}
     defaults:
       run:
         working-directory: ${{ github.event.repository.name }}
@@ -19,10 +21,10 @@ jobs:
           path: ${{ github.event.repository.name }}
       - name: yq - portable yaml processor
         uses: mikefarah/yq@v4.34.2
-      - run: |
-          pwd
-          ls
-          # discover app
+      - id: getapps
+        run: |
+          apps=($(grep -l "apps.x.anz.com" **/*.yaml | xargs -I{} dirname {}))
+          echo "apps=$(jq -c -n '$ARGS.positional' --args ${apps[@]})" >> "$GITHUB_OUTPUT"
 
   build-apps:
     needs: [discover-apps]
@@ -32,5 +34,5 @@ jobs:
         envs: [["dev"]]
     uses: ./.github/workflows/workflow-app.yaml
     with:
-      apps: '["config/x-demo-cloudrun", "config/x-demo-cloudrun-bg"]'
+      apps: ${{ needs.discover-apps.outputs.apps }}
       envs: ${{ toJSON(matrix.envs) }}

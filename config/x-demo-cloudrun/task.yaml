@@ -1,0 +1,26 @@
+apiVersion: tasks.x.anz.com/v1alpha1
+kind: KubernetesJob
+metadata:
+  name: x-demo-cloudrun-task
+  namespacePrefix: x
+  valuestream: x
+  xcrd: x-demo-cloudrun
+spec:
+  istio: false
+  restartPolicy: Never
+  application:
+    image:
+      repository: hub.artifactory.gcp.anz/docker/whalesay
+      tag: latest
+    command: ['cowsay', 'moo']
+  serviceAccount:
+    enabled: true
+    name: x-demo-cloudrun
+
+envs:
+  - name: dev
+    wiEmail: x-demo-cloudrun-dev@anz-x-xdeploy-dev-c357b2.iam.gserviceaccount.com
+  - name: np
+    wiEmail: x-demo-cloudrun-np@anz-x-xdeploy-np-38b4c8.iam.gserviceaccount.com
+pipeline:
+  order: predeploy

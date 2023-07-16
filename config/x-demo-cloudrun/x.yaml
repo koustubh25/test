@@ -1,0 +1,50 @@
+apiVersion: apps.x.anz.com/v1alpha1
+kind: CloudRun
+metadata:
+  name: x-demo-cloudrun
+  valuestream: x
+spec:
+  scheduling:
+    minScale: 1
+    maxScale: 2
+    containerConcurrency: 2
+    cpuThrottling: true
+    timeoutSeconds: 40
+  application:
+    image:
+      repository: australia-southeast1-docker.pkg.dev/anz-x-xdeploy-np-38b4c8/x-demo-artfacts/x-demo-cloudrun
+      tag: sometag
+    resources:
+      limits:
+        memory: 128Mi
+        cpu: 1000m
+    ports:
+      - containerPort: 8080
+        name: h2c
+envs:
+  - name: dev
+    security:
+      serviceAccount: x-demo-cloudrun-dev@anz-x-xdeploy-dev-c357b2.iam.gserviceaccount.com
+      encryptionKey: projects/anz-x-xdeploy-dev-c357b2/locations/australia-southeast1/keyRings/x-demo-cloudrun-dev/cryptoKeys/run-x-demo-cloudrun
+    config:
+      - name: config.yaml
+        type: gsm
+        gsm:
+          - key: x-cloudrun-x-demo-cloudrun-dev-config
+        consumers:
+          - name: application
+            mountPath: /app/config
+  - name: np
+    security:
+      serviceAccount: x-demo-cloudrun-np@anz-x-xdeploy-np-38b4c8.iam.gserviceaccount.com
+      encryptionKey: projects/anz-x-xdeploy-np-38b4c8/locations/australia-southeast1/keyRings/x-demo-cloudrun-np/cryptoKeys/run-x-demo-cloudrun
+    config:
+      - name: config.yaml
+        type: gsm
+        gsm:
+          - key: x-cloudrun-x-demo-cloudrun-np-config
+        consumers:
+          - name: application
+            mountPath: /app/config
+pipeline:
+  provider: harness

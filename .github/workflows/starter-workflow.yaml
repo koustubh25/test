@@ -22,7 +22,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        envs: [["dev"], ["sit5", "sit2", "sit3"], ["prod"]]
+        envs: [["dev"]]
     uses: ./.github/workflows/workflow-app.yaml
     with:
       apps: '["config/x-demo-cloudrun", "config/x-demo-cloudrun-bg"]'

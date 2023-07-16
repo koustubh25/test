@@ -1,0 +1,85 @@
+apiVersion: tasks.x.anz.com/v1alpha1
+kind: CloudRunJob
+metadata:
+  name: demo-run-job
+  namespacePrefix: x
+  valuestream: x
+  xcrd: x-demo-cloudrun
+spec:
+  application:
+    image:
+      repository: australia-southeast1-docker.pkg.dev/anz-x-xdeploy-np-38b4c8/x-demo/utils
+      tag: rapid     # if not present, it'll use the value passed in as `--version` flag, eg versys version
+    command:
+      - echo
+    args:
+      - standalone-job
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 512Mi
+envs:
+- name: dev
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 1Gi
+  config:
+  - type: env
+    envVars:
+      - name: ENV_FROM_XRD
+        value: TRUE_DEV
+      - name: TEST_DEMO_CLOUDRUN
+        value: TRAFFIC_CHAPTER
+  security:
+    serviceAccount: x-demo-cloudrun-dev@anz-x-xdeploy-dev-c357b2.iam.gserviceaccount.com
+- name: np
+  config:
+  - type: env
+    envVars:
+      - name: ENV_FROM_XCRD
+        value: TRUE_NP
+  security:
+    serviceAccount: x-demo-cloudrun-np@anz-x-xdeploy-np-38b4c8.iam.gserviceaccount.com
+pipeline:
+  order: standalone
+---
+apiVersion: tasks.x.anz.com/v1alpha1
+kind: CloudRunJob
+metadata:
+  name: demo-run-job-pre
+  namespacePrefix: x
+  valuestream: x
+  xcrd: x-demo-cloudrun
+spec:
+  application:
+    image:
+      repository: australia-southeast1-docker.pkg.dev/anz-x-xdeploy-np-38b4c8/x-demo/utils
+      tag: rapid     # if not present, it'll use the value passed in as `--version` flag, eg versys version
+    command:
+      - echo
+    args:
+      - pre-job
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 512Mi
+envs:
+- name: dev
+  config:
+  - type: env
+    envVars:
+      - name: ENV_FROM_XRD
+        value: TRUE_DEV
+  security:
+    serviceAccount: x-demo-cloudrun-dev@anz-x-xdeploy-dev-c357b2.iam.gserviceaccount.com
+- name: np
+  config:
+  - type: env
+    envVars:
+      - name: ENV_FROM_XCRD
+        value: TRUE_NP
+  security:
+    serviceAccount: x-demo-cloudrun-np@anz-x-xdeploy-np-38b4c8.iam.gserviceaccount.com
+pipeline:
+  order: predeploy

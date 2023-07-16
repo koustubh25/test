@@ -17,6 +17,7 @@ jobs:
       - run: |
           pwd
           cd ${{ github.event.repository.name }}
+          ls
 
   build-apps:
     needs: [discover-apps]

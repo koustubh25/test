@@ -19,6 +19,7 @@ jobs:
           ls /home/runner/work
 
   build-apps:
+    needs: [discover-apps]
     strategy:
       max-parallel: 1
       matrix:

@@ -19,7 +19,7 @@ jobs:
       matrix:
         stages: ["predeploy", "deploy", "postdeploy"]
     steps:
-      - run: echo "stage=${{ matrix.stages }}" >> "GITHUB_OUTPUT"
+      - run: echo "stage=${{ [matrix.stages] }}" >> "GITHUB_OUTPUT"
         id: getstage
 
   deploy-app-env:
@@ -32,7 +32,7 @@ jobs:
       matrix:
         env: ${{ fromJSON(inputs.envs) }}
         app: ${{ fromJSON(inputs.apps) }}
-        stage: ${{  fromJSON([needs.deploy-stage.outputs.stage]) }}
+        stage: ${{  fromJSON(needs.deploy-stage.outputs.stage) }}
     environment: ${{ matrix.env }}
     steps:
       - id: checkout

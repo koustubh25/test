@@ -11,20 +11,8 @@ on:
         type: string
 
 jobs:
-  deploy-stage:
-    runs-on: ubuntu-latest
-    outputs:
-      stage: ${{ steps.getstage.outputs.stage }}
-    strategy:
-      matrix:
-        stages: ["predeploy", "deploy", "postdeploy"]
-    steps:
-      - run: echo "stage=[${{ matrix.stages }}]" >> "GITHUB_OUTPUT"
-        id: getstage
-
   deploy-app-env:
     runs-on: ubuntu-latest
-    needs: [deploy-stage]
     defaults:
       run:
         working-directory: ${{ github.event.repository.name }}
@@ -32,17 +20,9 @@ jobs:
       matrix:
         env: ${{ fromJSON(inputs.envs) }}
         app: ${{ fromJSON(inputs.apps) }}
-        stage: ${{  fromJSON(needs.deploy-stage.outputs.stage) }}
     environment: ${{ matrix.env }}
     steps:
-      - id: checkout
-        uses: actions/checkout@v3
+      - uses: ./.github/workflows/workflow-stage.yaml
         with:
-          path: ${{ github.event.repository.name }}
-      - name: Merge into x-deployments
-        run: |
-          echo "docker run x-github-actions:rapid generate.manifests.env"
-          # internally uses x manifest gen --base=${{ matrix.app }} --filter env=${{ matrix.env }}'
-          # This creates PR and merges into x-deployments
-          echo ${{ matrix.stage }}
-          sleep 10
+          app: ${{ matrix.app }}
+          env: ${{ matrix.env }}

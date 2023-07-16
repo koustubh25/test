@@ -8,6 +8,7 @@ on:
 
 jobs:
   discover-apps:
+    runs-on: ubuntu-latest
     steps:
       - run: |
           echo "checking if already checked out"

@@ -13,6 +13,9 @@ on:
 jobs:
   deploy-stage:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ github.event.repository.name }}
     strategy:
       max-parallel: 1
       matrix:

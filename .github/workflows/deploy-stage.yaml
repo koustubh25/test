@@ -33,7 +33,7 @@ jobs:
           tree .github
           cat /home/runner/work/test/test/.github/actions/action.yaml
       - id: foo
-        uses: ./.github/actions/action.yaml
+        uses: ./${{ github.event.repository.name }}/.github/actions/action.yaml
       # - name: Merge into x-deployments
       #   run: |
       #     echo "docker run x-github-actions:rapid generate.manifests.env"

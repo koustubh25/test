@@ -28,9 +28,9 @@ jobs:
       #     ls -a
       #     ls -a /home/runner/work/test/test/
       #     tree .github
-      #     cat /home/runner/work/test/test/.github/actions/action.yaml
+      #     cat /home/runner/work/test/test/.github/actions
       - id: foo
-        uses: ./.github/actions/action.yaml
+        uses: ./.github/actions
       # - name: Merge into x-deployments
       #   run: |
       #     echo "docker run x-github-actions:rapid generate.manifests.env"

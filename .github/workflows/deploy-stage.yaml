@@ -11,51 +11,38 @@ on:
         type: string
 
 jobs:
-  deploy-stage:
+  predeploy-stage:
     runs-on: ubuntu-latest
-    # defaults:
-    #   run:
-    #     working-directory: ${{ github.event.repository.name }}
-    strategy:
-      max-parallel: 1
-      matrix:
-        stages: ["predeploy", "deploy", "postdeploy"]
+    name: Deploy predeploy resources
     environment: ${{ inputs.env }}
     steps:
       - uses: actions/checkout@v3
-      # - run: |
-      #     pwd
-      #     ls -a
-      #     ls -a /home/runner/work/test/test/
-      #     tree .github
-      #     cat /home/runner/work/test/test/.github/actions
       - id: foo
         uses: ./.github/actions
-      # - name: Merge into x-deployments
-      #   run: |
-      #     echo "docker run x-github-actions:rapid generate.manifests.env"
-      #     # internally uses x manifest gen --base=${{ inputs.app }} --filter env=${{ matrix.env }} --filter stage=${{ matrix.stages }}'
-      #     # This creates PR and merges into x-deployments
-      #     echo ${{ inputs.app }}
-      #     echo ${{ matrix.env }}
-      #     sleep 10
-      # - name: Deploy ${{ inputs.app }} ${{ inputs.env }} ${{ matrix.stages }}
-      #   working-directory: ./${{ inputs.env }}/${{ matrix.stages }}/cloudrunjob
-      #   run: |
-      #     deploy.sh --kind=cloudrunjob --name=xxx
-      # - name: Deploy ${{ inputs.app }} ${{ inputs.env }} ${{ matrix.stages }}
-      #   working-directory: ./${{ inputs.env }}/${{ matrix.stages }}/cloudrun
-      #   run: |
-      #     deploy.sh --kind=cloudrun --name=xxx
-      # - name: Deploy ${{ inputs.app }} ${{ inputs.env }} ${{ matrix.stages }}
-      #   working-directory: ./${{ inputs.env }}/${{ matrix.stages }}/cloudfunction
-      #   run: |
-      #     deploy.sh --kind=cloudfunction --name=xxx
-      # - name: Deploy ${{ inputs.app }} ${{ inputs.env }} ${{ matrix.stages }}
-      #   working-directory: ./${{ inputs.env }}/${{ matrix.stages }}/kubernetes
-      #   run: |
-      #     TODO: wait for  fluxtomization to be healthy
-      # - name: Deploy ${{ inputs.app }} ${{ inputs.env }} ${{ matrix.stages }}
-      #   working-directory: ./${{ inputs.env }}/${{ matrix.stages }}/kubernetesjob
-      #   run: |
-      #     TODO: wait for  fluxtomization to be healthy
+        with:
+          app: ${{ inputs.app }}
+          env: ${{ inputs.env }}
+  deploy-stage:
+    runs-on: ubuntu-latest
+    needs: [predeploy]
+    name: Deploy app resources
+    environment: ${{ inputs.env }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: foo
+        uses: ./.github/actions
+        with:
+          app: ${{ inputs.app }}
+          env: ${{ inputs.env }}
+  postdeploy-stage:
+    runs-on: ubuntu-latest
+    needs: [deploy-stage]
+    name: Deploy postdeploy resources
+    environment: ${{ inputs.env }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: foo
+        uses: ./.github/actions
+        with:
+          app: ${{ inputs.app }}
+          env: ${{ inputs.env }}

@@ -5,4 +5,5 @@ on:
 
 jobs:
   bootstrap:
-    uses: ./.github/workflows/orchestrate.yaml
+    # uses: ./.github/workflows/orchestrate.yaml
+    uses: ./.github/workflows/test.yaml

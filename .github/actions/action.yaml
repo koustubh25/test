@@ -1,0 +1,17 @@
+name: "Deploy Stage"
+description: "This will deploy a stage"
+runs:
+  using: "composite"
+  steps:
+    - id: checkout
+      uses: actions/checkout@v3
+      with:
+        path: ${{ github.event.repository.name }}
+    - name: Merge into x-deployments
+      run: |
+        echo "docker run x-github-actions:rapid generate.manifests.env"
+        # internally uses x manifest gen --base=${{ inputs.app }} --filter env=${{ matrix.env }} --filter stage=${{ matrix.stages }}'
+        # This creates PR and merges into x-deployments
+        echo ${{ inputs.app }}
+        echo ${{ matrix.env }}
+        sleep 10

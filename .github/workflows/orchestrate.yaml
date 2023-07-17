@@ -29,8 +29,9 @@ jobs:
         name: Get Environments
         run: |
           # This command doesn't exist, but something like this is needed which provides enviornments in order
-          echo "Running 'x workspace environments list --order (--vs x)'"
-          echo "envs=[[\"dev\"],[\"sit1\",\"sit2\"],[\"prod\"]]" >> "$GITHUB_OUTPUT"
+          echo "Running 'x ci environments list --order (--vs x)'"
+          echo "envs=[[\"dev\"],[\"prod\"]]" >> "$GITHUB_OUTPUT"
+          # [\"sit1\",\"sit2\"]
 
   build-apps:
     needs: [discover-apps]

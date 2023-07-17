@@ -13,19 +13,16 @@ on:
 jobs:
   deploy-stage:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ github.event.repository.name }}
+    # defaults:
+    #   run:
+    #     working-directory: ${{ github.event.repository.name }}
     strategy:
       max-parallel: 1
       matrix:
         stages: ["predeploy", "deploy", "postdeploy"]
     environment: ${{ inputs.env }}
     steps:
-      - id: checkout
-        uses: actions/checkout@v3
-        with:
-          path: ${{ github.event.repository.name }}
+      - uses: actions/checkout@v3
       - run: |
           pwd
           ls -a
@@ -33,7 +30,7 @@ jobs:
           tree .github
           cat /home/runner/work/test/test/.github/actions/action.yaml
       - id: foo
-        uses: ./${{ github.event.repository.name }}/.github/actions/action.yaml
+        uses: ./.github/actions/action.yaml
       # - name: Merge into x-deployments
       #   run: |
       #     echo "docker run x-github-actions:rapid generate.manifests.env"

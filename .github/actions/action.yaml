@@ -3,10 +3,6 @@ description: "This will deploy a stage"
 runs:
   using: "composite"
   steps:
-    - id: checkout
-      uses: actions/checkout@v3
-      with:
-        path: ${{ github.event.repository.name }}
     - name: Merge into x-deployments
       run: |
         echo "docker run x-github-actions:rapid generate.manifests.env"

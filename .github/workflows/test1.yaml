@@ -5,4 +5,8 @@ on:
 
 jobs:
   job1:
+    strategy:
+      max-parallel: 1
+      matrix:
+        envs: ["dev", "prod"]
     uses: ./.github/workflows/test2.yaml

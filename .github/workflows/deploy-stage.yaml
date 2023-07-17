@@ -19,12 +19,12 @@ jobs:
         stages: ["predeploy", "deploy", "postdeploy"]
     environment: ${{ inputs.env }}
     steps:
+      - id: checkout
+        uses: actions/checkout@v3
+        with:
+          path: ${{ github.event.repository.name }}
       - id: foo
         uses: ./.github/actions/action.yaml
-      # - id: checkout
-      #   uses: actions/checkout@v3
-      #   with:
-      #     path: ${{ github.event.repository.name }}
       # - name: Merge into x-deployments
       #   run: |
       #     echo "docker run x-github-actions:rapid generate.manifests.env"

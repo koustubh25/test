@@ -23,12 +23,12 @@ jobs:
     environment: ${{ inputs.env }}
     steps:
       - uses: actions/checkout@v3
-      - run: |
-          pwd
-          ls -a
-          ls -a /home/runner/work/test/test/
-          tree .github
-          cat /home/runner/work/test/test/.github/actions/action.yaml
+      # - run: |
+      #     pwd
+      #     ls -a
+      #     ls -a /home/runner/work/test/test/
+      #     tree .github
+      #     cat /home/runner/work/test/test/.github/actions/action.yaml
       - id: foo
         uses: ./.github/actions/action.yaml
       # - name: Merge into x-deployments

@@ -28,7 +28,9 @@ jobs:
           path: ${{ github.event.repository.name }}
       - run: |
           pwd
-          ls
+          ls -a
+          ls -a /home/runner/work/test/test/
+          tree .github
       - id: foo
         uses: ./.github/actions/action.yaml
       # - name: Merge into x-deployments
